@@ -73,7 +73,7 @@ char get_valid_char(char option1, char option2)
 // Compute photon energy, Delta E = 13.6*(Z^2)*(1/n_j^2-1/n_i^2) eV
 double calculate_energy(int atomic_num, int n_init, int n_fin)
 {
-  return 13.6*pow(atomic_num, 2)*(pow(n_fin, -2) - pow(n_init, -2));
+  return 13.6*pow(atomic_num, 2.0)*(pow(n_fin, -2.0) - pow(n_init, -2.0));
 }
 
 int main()
@@ -86,9 +86,7 @@ int main()
   char energy_unit;
   double energy;
 
-  //bool continue_flag{true};
-  bool continue_flag{false};
-  char continue_char{'n'};
+  char continue_tag{'n'};
 
   // Perform the calculation until the user asks to stop
   do
@@ -120,24 +118,24 @@ int main()
     // Compute the photon energy and output the answer
     energy = calculate_energy(atomic_number, n_initial, n_final); // eV
 
-    // TODO: Format energy
+    // .. format energy
     if(energy_unit == 'e')
     {
       std::cout<<"The photon released in the transition from n="<<n_initial<<
-      " to n="<<n_final<<" has an energy of "<<energy<<" eV"<<std::endl;
+      " to n="<<n_final<<" has an energy of "<<std::setprecision(3)<<energy<<" eV"<<std::endl;
     }
     else
     {
       energy*=ev_to_joule;
       std::cout<<"The photon released in the transition from n="<<n_initial<<
-      " to n="<<n_final<<" has an energy of "<<energy<<" J"<<std::endl;
+      " to n="<<n_final<<" has an energy of "<<std::setprecision(3)<<energy<<" J"<<std::endl;
     }
 
     // Ask if they want to repeat the calculation
     std::cout<<"Would you like to calculate another transition (y/n)?: ";
-    continue_char = get_valid_char('y', 'n');
+    continue_tag = get_valid_char('y', 'n');
   }
-  while(continue_char == 'y');
+  while(continue_tag == 'y');
 
   return 0;
 }
